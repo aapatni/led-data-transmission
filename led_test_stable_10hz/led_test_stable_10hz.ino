@@ -10,34 +10,39 @@ void setup() {
 }
 
 void loop() {
-  int num = 5;
+  int num = random(1, 128);
   int count = 7;
   byte data[8] = {0, 0, 0, 0, 0, 0, 0, 0};
   Serial.println();
+  Serial.print("NUM: \t");
+  Serial.print(num);
+  Serial.println();
 
   while (num > 0) {
-    Serial.println();
-    Serial.print("NUM: \t");
-    Serial.print(num);
-    data[count] = num >> 1;
-    num = num >>1;
+    if (num % 2 == 1) {
+      data[count] = 1;
+    }
+    else {
+      data[count]  = 0;
+    }
+    num = num >> 1;
     count -= 1;
   }
+  data[0] = 1;
   Serial.println();
 
   for (int i = 0; i < 8; i ++) {
     Serial.print(data[i]);
     Serial.print("\t");
   }
-  
+  Serial.println();
   for ( int i = 0; i < 8; i++) {
     if (data[i] == 1) {
       digitalWrite(led, HIGH);
-      delay(200);
     } else {
       digitalWrite(led, LOW);
-      delay(200);
     }
+    delay(100);
   }
-  delay(2000);
+  delay(1000);
 }
